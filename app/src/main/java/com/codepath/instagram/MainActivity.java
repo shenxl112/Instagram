@@ -49,16 +49,13 @@ public class MainActivity extends AppCompatActivity {
         ivPostImage = findViewById(R.id.ivPostImage);
         btnSubmit = findViewById(R.id.btnSubmit);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener(){
+        btnCaptureImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                String description = etDescription.getText().toString();
-                ParseUser user = ParseUser.getCurrentUser();
-                savePost(description, user,photoFile);
                 launchCamera();
             }
         });
-        
+
 //        queryPosts();
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // by this point we have the camera photo on disk
@@ -145,13 +142,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, "Success!");
                 etDescription.setText("");
-//                ivPostImage.setImageResource(0);
+                //ivPostImage.setImageResource(0);
             }
         });
     }
 
     private void queryPosts() {
-        final ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
+        ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
         postQuery.findInBackground(new FindCallback<Post>() {
             @Override
